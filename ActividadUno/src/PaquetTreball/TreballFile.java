@@ -54,25 +54,36 @@ public class TreballFile {
     public static void ejercicioTres() {
         System.out.println("Escribe dos extensiones separadas por espacio. (Ej: jpg txt):  ");
         String entrada = userInput.nextLine();
+        //Guardamos la entrada del usuario en un array tipo String y lo dividiremos con un split
         String[] extensiones = entrada.split(" ");
 
+        //Si la entrada no son 2 extensiones separadas por espacio, dará error
         if (extensiones.length != 2) {
             System.out.println("Debes ingresar dos extensiones separadas por un espacio");
         }
 
+        //Guardamos las palabras divididas en dos variables String
         String extAntigua = extensiones[0];
         String extNueva = extensiones[1];
 
+        //Asignamos la ruta de trabajo que será la dirección actual, en la carpeta'pruebas'
         File dirTrabajo = new File(System.getProperty("user.dir"), "pruebas");
+        //Hacemos una lista de los archivos en esta dirección en un objeto File
         File[] archivosCambio = dirTrabajo.listFiles();
 
+        //Hacemos un bucle para iterar sobre los archivos listados
         for (int i = 0; i < archivosCambio.length; i++) {
+            //Si el indice donde nos encontramos es un archivo
             if (archivosCambio[i].isFile()) {
-                String nombreArchivo = archivosCambio[i].getName();
+                String nombreArchivo = archivosCambio[i].getName(); //Guardamos el nombre del archivo en un String
+                //Si el archivo acaba con '.' y la extension antigua
                 if (nombreArchivo.endsWith("." + extAntigua)) {
+                    //Guardamos el nombre del archivo en un string con la extension nueva
                     String nuevoArchivo = nombreArchivo.substring(0, nombreArchivo.length() - extAntigua.length()) + extNueva;
+                    //Renombramos el archivo usando el String anterior
                     File archivoRenombrado = new File(archivosCambio[i].getParent(), nuevoArchivo);
 
+                    //Si el archivo se renombra correctamente entonces nos dará un mensaje de confirmación, sino nos dará un mensaje de error
                     if (archivosCambio[i].renameTo(archivoRenombrado)) {
                         System.out.println("El archivo fue renombrado: " + archivoRenombrado.getName());
                     } else {
@@ -84,6 +95,68 @@ public class TreballFile {
 
     }
 
-    
+    //Ejercicio cuatro
+    public static void ejercicioCuatro() {
+        System.out.println("Escribe un directorio de origen: ");
+        //Guardamos en un objeto de tipo File el string que introduce el usuario
+        File dirOrigen = new File(userInput.nextLine());
+        //Si el directorio existe y es una carpeta entrará en un while
+        if (dirOrigen.exists() && dirOrigen.isDirectory()) {
+            //Mientras la carpeta no sea nula, osea, tenga carpetas 'padre', se ejecturán los mensajes
+            while (dirOrigen != null) {
+                System.out.println("Dirección absoluta: " + dirOrigen.getAbsolutePath());
+
+                //Obtenemos en un tipo long el espacio libre y el espacio disponible
+                long espLibre = dirOrigen.getFreeSpace();
+                long espDisp = dirOrigen.getUsableSpace();
+
+                System.out.println("Espacio libre: " + espLibre);
+                System.out.println("Espacio disponible: " + espDisp);
+                
+                //la variable donde almacenamos la ruta se actualiza con el directorio padre
+                dirOrigen = dirOrigen.getParentFile();
+            }
+        } else {
+            System.out.println("El directorio no existe.");
+        }
+    }
+
+    //Ejercicio cinco
+    public static void ejercicioCinco() {
+        System.out.println("Introduce el nombre de una carpeta: ");
+        String rutaCarpeta = userInput.nextLine();
+        System.out.println("Introduce el nombre de un archivo: ");
+        String nomArchivo = userInput.nextLine();
+        
+        //Guardamos en un objeto file la ruta de la carpeta
+        File d = new File(rutaCarpeta);
+
+        //Si la carpeta existe y es un directorio, iniciará la función de busqueda de archivos
+        if (d.exists() && d.isDirectory()) {
+            buscarArchivos(d, nomArchivo);
+        } else {
+            System.out.println("Escribe una carpeta valida.");
+        }   
+    }
+
+    //Funcion de busqueda de archivos para el ejercico cinco
+    public static void buscarArchivos(File carpeta, String archivo) {
+        //obtenemos una lista de archivos y lo guardamos en un objeto tipo File
+        File[] archivosCarpetas = carpeta.listFiles();
+
+        //Verificar si la carpeta no es nula
+        if (archivosCarpetas != null) {
+            //Se hará un bucle para iterar las carpetas y archivos, que se guardará en archivoOcarpeta
+            for (File archivoOcarpeta : archivosCarpetas) {
+                //Si es un archivo y tiene el mismo nombre que dimos, lo imprimirá con su ruta absoluta
+                if (archivoOcarpeta.isFile() && archivoOcarpeta.getName().equals(archivo)) {
+                    System.out.println("Archivo encontrado: " + archivoOcarpeta.getAbsolutePath());
+                } else if (archivoOcarpeta.isDirectory()) { //Si encuentra una carpeta, ingresa en ella y busca de manera recursiva
+                    System.out.println("Entrando en subcarpeta: " + archivoOcarpeta.getAbsolutePath());
+                    buscarArchivos(archivoOcarpeta, archivo);
+                }
+            }
+        }
+    }
 
 }
