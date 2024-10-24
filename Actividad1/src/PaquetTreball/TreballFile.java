@@ -18,6 +18,7 @@ public class TreballFile {
                 System.out.println("Es un directorio.\nRuta absoluta: " + f.getAbsolutePath() + "\nNombre del directorio: " + f.getName());
             } else if (f.isFile()) {
                 System.out.println("Es un archivo.\nRuta absoluta: " + f.getAbsolutePath() + "\nNombre del archivo: " + f.getName());
+                
             }
         } else {
             System.out.println("El directorio o archivo que has introducido no existe.");
@@ -56,9 +57,6 @@ public class TreballFile {
         //Guardamos la entrada del usuario en un array tipo String y lo dividiremos con un split
         String[] extensiones = entrada.split(" ");
 
-        //Creamos un booleano para confirmar si se encuentran archivos o no
-        boolean fRenombrado = false;
-
         //Si la entrada no son 2 extensiones separadas por espacio, dará error
         if (extensiones.length != 2) {
             System.out.println("Debes ingresar dos extensiones separadas por un espacio");
@@ -88,17 +86,13 @@ public class TreballFile {
                     //Si el archivo se renombra correctamente entonces nos dará un mensaje de confirmación, sino nos dará un mensaje de error
                     if (archivosCambio[i].renameTo(archivoRenombrado)) {
                         System.out.println("El archivo fue renombrado: " + archivoRenombrado.getName());
-                        fRenombrado = true;
                     } else {
                         System.out.println("Error al renombrar el archivo: " + nombreArchivo);
                     }
                 }
             }
         }
-        
-        if (fRenombrado == false) {
-            System.out.println("No se encontraron archivos con la extensión '" + extAntigua + "'.");
-        }
+
     }
 
     //Ejercicio cuatro
@@ -164,4 +158,5 @@ public class TreballFile {
             }
         }
     }
+
 }

@@ -5,33 +5,44 @@ import java.util.Scanner;
 public class ProvarTreballFile {
 
     public static void menu() {
-        System.out.println("Introduce un numero para ver los ejercicios (1-5): ");
         Scanner option = new Scanner(System.in);
-        int eleccion = option.nextInt();
+        String eleccion;
 
-        switch (eleccion) {
-            case 1:
-                TreballFile.ejercicioUno();
-                break;
+        do {
+            System.out.println("________________________________");
+            System.out.println("Introduce un numero del 1 al 5 : \nPara salir ingresa '0'");
+            System.out.println("¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨");
+            eleccion = option.nextLine();
 
-            case 2:
-                TreballFile.ejercicioDos();
-                break;
+            switch (eleccion) {
+                case "1":
+                    TreballFile.ejercicioUno();
+                    break;
 
-            case 3:
-                TreballFile.ejercicioTres();
-                break;
+                case "2":
+                    TreballFile.ejercicioDos();
+                    break;
+    
+                case "3":
+                    TreballFile.ejercicioTres();
+                    break;
+    
+                case "4":
+                    TreballFile.ejercicioCuatro();
+                    break;
+    
+                case "5":
+                    TreballFile.ejercicioCinco();
+                    break;
 
-            case 4:
-                TreballFile.ejercicioCuatro();
-                break;
+                case "0":
+                    System.out.println("Hasta luego.");
+                    break;
 
-            case 5:
-                TreballFile.ejercicioCinco();
-                break;
-
-            default:
-                break;
-        }
+                default:
+                    System.out.println("Elige un numero válido.");
+                    break;
+            }
+        } while (!eleccion.equals("0"));
     }
 }
